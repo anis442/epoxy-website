@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPOXORA | Premium Epoxy Floors</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#101111;color:#fff}
+header{height:75px;display:flex;align-items:center;justify-content:space-between;
+padding:0 7%;border-bottom:1px solid #333;background:#101111;position:sticky;top:0;z-index:5}
+.logo{font-size:26px;font-weight:bold;letter-spacing:3px;color:#d5b477}
+nav{display:flex;gap:22px;align-items:center}
+a{color:white;text-decoration:none}
+button{cursor:pointer;border:0;padding:12px 17px;font-weight:bold}
+.gold{background:#d5b477;color:#111}
+.outline{background:transparent;border:1px solid #d5b477;color:#d5b477}
+.hero{min-height:440px;padding:90px 8%;display:flex;align-items:center;
+background:linear-gradient(90deg,#101111 20%,#101111aa),url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85') center/cover}
+.hero div{max-width:600px}
+.eyebrow{color:#d5b477;letter-spacing:4px;font-size:12px}
+h1{font-size:clamp(38px,6vw,66px);line-height:1.1;margin:20px 0}
+p{color:#bbb;line-height:1.7}
+.hero button{margin-top:25px}
+.section{padding:65px 7%}
+.section-head{display:flex;justify-content:space-between;align-items:center;
+gap:15px;flex-wrap:wrap;margin-bottom:28px}
+h2{font-size:30px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:25px}
+.filters button{background:#242525;color:#ddd}
+.filters button.active{background:#d5b477;color:#111}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{background:#1b1c1c;border:1px solid #333;overflow:hidden}
+.card img{width:100%;height:190px;object-fit:cover;display:block;background:#333}
+.card-info{padding:16px}
+.card h3{font-size:16px;margin-bottom:8px}
+.card p{font-size:13px}
+.price{color:#d5b477;font-size:19px;font-weight:bold;margin:13px 0}
+.card button{width:100%;margin-top:6px}
+.banner{margin:0 7% 60px;padding:40px;background:#24231f;border:1px solid #544a36}
+footer{text-align:center;padding:30px;border-top:1px solid #333;color:#999}
+.modal{position:fixed;inset:0;background:#000c;z-index:10;display:none;
+align-items:center;justify-content:center;padding:20px}
+.panel{background:#1b1c1c;border:1px solid #d5b477;padding:28px;width:100%;max-width:440px;max-height:85vh;overflow:auto}
+.panel input,.panel select,.panel textarea{width:100%;padding:12px;margin:8px 0 14px;background:#292a2a;color:white;border:1px solid #555}
+.panel button{margin:5px 3px 5px 0}
+.close{float:right;background:transparent;color:white;font-size:20px;padding:0}
+#message{margin-top:12px;color:#d5b477}
+.admin-list{padding:10px 0;border-bottom:1px solid #444}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){
+header{padding:15px 4%;height:auto;gap:12px;flex-wrap:wrap}
+nav{gap:10px;flex-wrap:wrap;font-size:13px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.section{padding:45px 4%}.hero{padding:65px 5%}
+.card img{height:145px}
+}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+<header>
+  <a class="logo" href="#">EPOXORA<span style="color:white">.</span></a>
+  <nav>
+    <a href="#designs">Designs</a>
+    <a href="#about">About</a>
+    <button class="outline" onclick="openLogin()">Login / Register</button>
+    <button class="gold" onclick="openCart()">Orders (<span id="count">0</span>)</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="eyebrow">LUXURY FLOORING COLLECTION</span>
+    <h1>Transform Floors Into Art.</h1>
+    <p>Discover premium metallic, marble and 3D epoxy flooring designs for extraordinary spaces.</p>
+    <button class="gold" onclick="document.getElementById('designs').scrollIntoView({behavior:'smooth'})">EXPLORE DESIGNS ↗</button>
+  </div>
+</section>
+
+<section class="section" id="designs">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">OUR COLLECTION</span>
+      <h2 style="margin-top:10px">Signature Designs</h2>
+    </div>
+    <p id="total">100 premium designs</p>
+  </div>
+
+  <div class="filters">
+    <button class="active" onclick="filterDesigns('All',this)">All Designs</button>
+    <button onclick="filterDesigns('Marble',this)">Marble</button>
+    <button onclick="filterDesigns('Metallic',this)">Metallic</button>
+    <button onclick="filterDesigns('3D',this)">3D Floors</button>
+    <button onclick="filterDesigns('Stone',this)">Stone</button>
+  </div>
+  <div class="grid" id="gallery"></div>
+</section>
+
+<section class="banner" id="about">
+  <span class="eyebrow">MADE FOR EXTRAORDINARY SPACES</span>
+  <h2 style="margin:15px 0">Your Floor. Your Signature.</h2>
+  <p>Explore unique flooring concepts and request a quote for your next project.</p>
+  <button class="gold" onclick="openQuote()" style="margin-top:18px">REQUEST A QUOTE</button>
+</section>
+
+<footer>© 2026 EPOXORA — Premium Epoxy Flooring Designs</footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="panel">
+    <button class="close" onclick="closeModal()">✕</button>
+    <div id="panelContent"></div>
+  </div>
+</div>
+
+<script>
+const designs = [];
+const categories = ['Marble','Metallic','3D','Stone'];
+const names = [
+  'Royal Gold','Midnight Ocean','Silver Galaxy','Black Marble',
+  'Crystal River','Golden Waves','Emerald Luxe','White Diamond',
+  'Cosmic Blue','Pearl Mist','Obsidian','Desert Sand',
+  'Aurora','Liquid Gold','Ocean Storm','Moonlight',
+  'Copper Flame','Arctic Silver','Rose Gold','Sapphire'
+];
+
+for(let i=1;i<=100;i++){
+  const category=categories[(i-1)%4];
+  designs.push({
+    id:i,
+    name:names[(i-1)%names.length]+' '+String(i).padStart(2,'0'),
+    category,
+    price:39999+((i-1)%10)*100,
+    image:`https://images.unsplash.com/photo-${[
+      '1600607687939-ce8a6c25118c',
+      '1600566753086-00f18fb6b3ea',
+      '1600607687920-4e2a09cf159d',
+      '1600607687644-c7171b42498f'
+    ][(i-1)%4]}?auto=format&fit=crop&w=700&q=80`
+  });
+}
+
+let cart=[];
+let currentFilter='All';
+
+function render(){
+  const list=designs.filter(d=>currentFilter==='All'||d.category===currentFilter);
+  document.getElementById('total').textContent=list.length+' designs';
+  document.getElementById('gallery').innerHTML=list.map(d=>`
+    <article class="card">
+      <img src="${d.image}" alt="${d.name}" loading="lazy">
+      <div class="card-info">
+        <p>${d.category} COLLECTION</p>
+        <h3>${d.name}</h3>
+        <div class="price">₹${d.price.toLocaleString('en-IN')}</div>
+        <button class="gold" onclick="addCart(${d.id})">ADD TO ORDER</button>
+        <button class="outline" onclick="details(${d.id})">VIEW DETAILS</button>
+      </div>
+    </article>
+  `).join('');
+}
+
+function filterDesigns(category,btn){
+  currentFilter=category;
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function show(content){
+  document.getElementById('panelContent').innerHTML=content;
+  document.getElementById('modal').style.display='flex';
+}
+function closeModal(){document.getElementById('modal').style.display='none'}
+
+function details(id){
+  const d=designs.find(x=>x.id===id);
+  show(`<h2>${d.name}</h2><img src="${d.image}" style="width:100%;margin:18px 0">
+  <p>Collection: ${d.category}</p><div class="price">₹${d.price}</div>
+  <p>This is a design concept. Actual installation prices depend on area, materials and labour.</p>
+  <button class="gold" onclick="addCart(${id});closeModal()">ADD TO ORDER</button>`);
+}
+
+function addCart(id){
+  cart.push(designs.find(x=>x.id===id));
+  document.getElementById('count').textContent=cart.length;
+}
+
+function openCart(){
+  const items=cart.map(d=>`<div class="admin-list">${d.name} — ₹${d.price}</div>`).join('');
+  const total=cart.reduce((s,d)=>s+d.price,0);
+  show(`<h2>Your Order</h2><div style="margin:20px 0">${items||'<p>Your order list is empty.</p>'}</div>
+  <h3>Total: ₹${total}</h3>
+  ${cart.length?'<button class="gold" onclick="openQuote()">REQUEST ORDER</button>':''}`);
+}
+
+function openLogin(){
+  show(`<h2>Welcome Back</h2><p style="margin:10px 0">Sign in or create an account</p>
+  <form onsubmit="demoLogin(event)">
+  <input type="email" placeholder="Email address" required>
+  <input type="password" placeholder="Password (demo only)" required minlength="6">
+  <button class="gold" type="submit">LOGIN</button>
+  <button class="outline" type="button" onclick="register()">REGISTER</button>
+  </form><p id="message"></p>`);
+}
+
+function register(){
+  show(`<h2>Create Account</h2>
+  <form onsubmit="demoLogin(event)">
+  <input placeholder="Full name" required>
+  <input type="email" placeholder="Email address" required>
+  <input type="password" placeholder="Create password" required minlength="6">
+  <button class="gold" type="submit">CREATE ACCOUNT</button>
+  </form><p id="message"></p>`);
+}
+
+function demoLogin(e){
+  e.preventDefault();
+  document.getElementById('message').textContent=
+  'Demo only: connect a secure backend to activate real accounts.';
+}
+
+function openQuote(){
+  show(`<h2>Request a Quote</h2>
+  <p>Tell us about your flooring project.</p>
+  <form onsubmit="submitQuote(event)">
+  <input id="qname" placeholder="Your name" required>
+  <input id="qphone" placeholder="Phone number" required>
+  <select id="qtype"><option>Home Flooring</option><option>Commercial Flooring</option><option>Garage Flooring</option><option>3D Epoxy Flooring</option></select>
+  <input id="qarea" type="number" min="1" placeholder="Area (square feet)" required>
+  <textarea id="qnote" placeholder="Project details"></textarea>
+  <button class="gold" type="submit">SUBMIT REQUEST</button>
+  </form><p id="message"></p>`);
+}
+
+function submitQuote(e){
+  e.preventDefault();
+  const q={
+    name:document.getElementById('qname').value,
+    phone:document.getElementById('qphone').value,
+    type:document.getElementById('qtype').value,
+    area:document.getElementById('qarea').value,
+    note:document.getElementById('qnote').value,
+    date:new Date().toLocaleString()
+  };
+  const requests=JSON.parse(localStorage.getItem('epoxoraRequests')||'[]');
+  requests.push(q);
+  localStorage.setItem('epoxoraRequests',JSON.stringify(requests));
+  document.getElementById('message').textContent=
+    'Demo request saved in this browser. It has not been sent to a business.';
+}
+
+render();
+</script>
+</body>
+</html>
